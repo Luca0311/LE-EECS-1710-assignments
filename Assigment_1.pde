@@ -1,14 +1,24 @@
-Integer numCreatures = 50;
+Integer food = 60;
 PVector[] position, target;
 boolean isRunning = false;
 PImage img;
 
-void setup() { 
-  size(728, 546);
-  position = new PVector[numCreatures];
-  target = new PVector[numCreatures];
 
-  for (int i=0; i<numCreatures; i++){
+import gifAnimation.*;
+
+Gif gif;
+
+void setup() { 
+  size(1280, 720);
+  position = new PVector[food];
+  target = new PVector[food];
+  gif = new Gif(this, "butterfly.gif");
+  gif.loop();
+  gif.play();
+  imageMode(CENTER);
+  noCursor();
+
+  for (int i=0; i<food; i++){
     position[i] = new PVector(width/2, height/2);
     target[i] = new PVector(random(width), random(height));  
  
@@ -17,12 +27,13 @@ void setup() {
 }
 
 void draw() {
-  background(img = loadImage("broken glass.jpeg"));
-  for(int i=0; i<numCreatures; i++){
+  background(img = loadImage("magic.jpg"));
+  image(gif, mouseX, mouseY, 128, 128);
+  for(int i=0; i<food; i++){
     PVector mousePos = new PVector(mouseX, mouseY);
     
     isRunning = position[i].dist(mousePos) < 100;
-    for (int j=0; j<numCreatures; j++){
+    for (int j=0; j<food; j++){
       if (i == j){
         continue;
       }

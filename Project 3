@@ -1,0 +1,44 @@
+PImage origimg, swap;
+boolean displayOriginal = true;
+ 
+import gifAnimation.*;
+
+Gif gif;
+
+void setup() {
+  origimg = loadImage("road.jpeg");
+  size(500, 331);
+  swap = redblueswap(origimg);
+  gif = new Gif(this, "car.gif");
+  gif.loop();
+  gif.play();
+}
+ 
+void draw() {
+  if (displayOriginal) { image(origimg, 0, 0); } else { image(swap, 0, 0); }
+  image(gif, mouseX, mouseY, 300, 300);
+}
+ 
+void mousePressed() {
+  displayOriginal = !displayOriginal;
+}
+ 
+PImage redblueswap(PImage img) {
+  PImage switched = img.get();
+  switched.loadPixels();
+  for (int i=0; i<switched.pixels.length; i++) {
+    color c = switched.pixels[i];
+    float r = c >> 16 & 0xFF;
+    float g = c & 0xFF;
+    float b = c >> 8 & 0xFF;
+    switched.pixels[i] = color(g, r, b);
+  }
+  switched.updatePixels();
+  return switched;
+}
+
+//Sources for assistance:
+//https://processing.org/reference/rightshift.html 
+//https://youtu.be/qB3SA43vKYc
+//https://youtu.be/j-ZLDEnhT3Q
+//https://youtu.be/UvSjtiW-RH8
